@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "799395776424",
+    "project_id": "gro-sense",
+    "storage_bucket": "gro-sense.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799395776424:android:a205ff58eaaed06df13f9d",
+        "android_client_info": {
+          "package_name": "com.example.gro_sense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799395776424-936hnnib597n4ihlrfnj979k8i07hjkr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLWaSbLfmudamnz7DImSow0gCZHXTDq0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799395776424-936hnnib597n4ihlrfnj979k8i07hjkr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
