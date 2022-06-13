@@ -1,4 +1,6 @@
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:gro_sense/screens/dashboard.dart';
+import 'package:gro_sense/screens/first_screen.dart';
 import 'package:gro_sense/screens/home_screen.dart';
 import 'package:gro_sense/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,56 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gro_sense/screens/login_with_facebook.dart';
-import 'package:gro_sense/screens/login_with_google.dart';
-import 'package:gro_sense/screens/login_with_phone.dart';
-import 'package:gro_sense/screens/login_with_twitter.dart';
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Select Option"),
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithGoogle()));
-                },
-                child: Text("Login with google")),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithFacebook()));
-                },
-                child: Text("Login with facebook")),
-
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithPhone()));
-                },
-                child: Text("Login with Phone")),
-
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithTwitter()));
-                },
-                child: Text("Login with Twitter"))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
+import 'package:gro_sense/screens/reset_password_screen.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -157,26 +110,26 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
     );
 
-    final googleButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.green[400],
-      child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery
-              .of(context)
-              .size
-              .width,
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithGoogle()));
-          },
-          child: Text(
-            "Login with Google",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )),
-    );
+    // final googleButton = Material(
+    //   elevation: 5,
+    //   borderRadius: BorderRadius.circular(30),
+    //   color: Colors.green[400],
+    //   child: MaterialButton(
+    //       padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+    //       minWidth: MediaQuery
+    //           .of(context)
+    //           .size
+    //           .width,
+    //       onPressed: () {
+    //         Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginWithGoogle()));
+    //       },
+    //       child: Text(
+    //         "Login with Google",
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(
+    //             fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+    //       )),
+    // );
 
     return Scaffold(
 
@@ -192,8 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
             fit: BoxFit.cover,
           ),
         ),
-          child: SingleChildScrollView(
-            child: Container(
+        child: SingleChildScrollView(
+          child: Container(
             color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.all(36.0),
@@ -213,6 +166,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     emailField,
                     SizedBox(height: 25),
                     passwordField,
+                    GestureDetector(
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[400],
+                          fontSize:15,
+                        )
+                      ),
+                      onTap: (){
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
+                      },
+                    ),
                     SizedBox(height: 35),
                     loginButton,
                     SizedBox(height: 15),
@@ -240,12 +207,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 15,),
                     Text("OR"),
                     SizedBox(height: 15,),
-                    googleButton,
+                    //googleButton,
                     ElevatedButton(onPressed: () async {
-                                  await signInWithGoogle();
+                      await signInWithGoogle();
 
-                                  setState(() {});
-                                }, child: Text("Login with google")),
+                      setState(() {});
+                    }, child: Text("Login with google")),
                   ],
                 ),
               ),
@@ -255,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -268,23 +235,26 @@ Future<UserCredential> signInWithGoogle() async {
       idToken: googleAuth.idToken,
     );
 
-    //email = googleUser.email;
-
+    var userEmail = googleUser.email;
+          Fluttertoast.showToast(msg: "Login Successful");
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => DashBoardScreen()));
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
+
   }
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((uid) =>
-      {
-        Fluttertoast.showToast(msg: "Login Successful"),
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomeScreen())),
-      });
-       } on FirebaseAuthException catch (error) {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) =>
+        {
+          Fluttertoast.showToast(msg: "Login Successful"),
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => DashBoardScreen())),
+        });
+      } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";

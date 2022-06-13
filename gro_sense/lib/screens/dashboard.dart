@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'edit_profile_screen.dart';
+
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
 
@@ -12,46 +15,50 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
         title: const Text("Dashboard"),
     centerTitle: true,
     ),
-    body: Container(
-    width: double.infinity,
-    height: double.infinity,
+      floatingActionButton: FloatingActionButton.extended(
+        elevation: 5.0,
+        icon: const Icon(Icons.add),
+        label: const Text('Add'),
+        onPressed: () {},
+      ),
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        // hasNotch: false,
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {},
+            ),
+            SizedBox(width:20),
+            IconButton(
+              icon: Icon(Icons.card_giftcard_rounded),
 
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image: AssetImage("assets/logo.png"),
-    colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-    fit: BoxFit.cover,
-    ),
-    ),
-    ),
-   bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => EditProfileScreen()));
+              },
+            )
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: ('Favourite')),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: ('Favourite'))
-            ],
-          ),
-        )
-      )
+      ),
     );
   }
 }

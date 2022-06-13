@@ -14,10 +14,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "799395776424-h5u839dhi0goo1dr7jb4av2j3jlen8ed.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gro_sense",
+            "certificate_hash": "72f7f13bd3b5e692762bdf35a7c625c7a878e90c"
+          }
+        },
+        {
           "client_id": "799395776424-936hnnib597n4ihlrfnj979k8i07hjkr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
+
       "api_key": [
         {
           "current_key": "AIzaSyDLWaSbLfmudamnz7DImSow0gCZHXTDq0Y"
