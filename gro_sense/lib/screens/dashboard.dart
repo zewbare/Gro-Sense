@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gro_sense/screens/add_product.dart';
 
 import 'edit_profile_screen.dart';
 
@@ -25,7 +26,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         elevation: 5.0,
         icon: const Icon(Icons.add),
         label: const Text('Add'),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => AddaProductScreen()));
+        },
       ),
       floatingActionButtonLocation:
       FloatingActionButtonLocation.centerDocked,
