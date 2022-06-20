@@ -15,7 +15,7 @@ class AddaProductScreen extends StatefulWidget {
   _AddaProductScreenState createState() => _AddaProductScreenState();
 
 }
-
+//ghjk
 class _AddaProductScreenState extends State<AddaProductScreen>
 {
   final _formKey = GlobalKey<FormState>();
