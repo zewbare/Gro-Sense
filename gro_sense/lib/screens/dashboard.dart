@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widget.dart';
-import 'edit_profile_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -17,10 +16,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Dashboard"),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //
+      //   title:
+      //       const Text("Dashboard", style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.w500)),
+      //   backgroundColor: Color(0xFFF6F6F6),
+      //
+      //   elevation: 0,
+      // ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -31,82 +34,104 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  child: Image(
-                    image: AssetImage('assets/images/image.png'),
-                    height: 50,
-                    width: 50,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 5.0,
                   ),
-                  margin: EdgeInsets.only(top: 32.0, bottom: 32.0),
+                  margin: EdgeInsets.only(top: 25.0, bottom: 10.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Welcome",
+                        style: TextStyle(
+                          color: Color(0x89000000),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 5.0,
+                        ),
+                        child: Text(
+                          "Nirali Amrutiya",
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            height: 1.0,
+                            color: Color(0xFF000000),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    margin: EdgeInsets.only(top: 2.0, bottom: 10.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image(
+                        image: AssetImage("assets/banner1.png"),
+                        width: double.infinity,
+                      ),
+                    )),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    // horizontal: 24.0,
+                    vertical: 10.0,
+                  ),
+                  margin: EdgeInsets.only(bottom: 10.0),
+                  decoration: BoxDecoration(
+                    // color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Upcoming Expires",
+                        style: TextStyle(
+                          color: Color(0x9E000000),
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 5.0,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                     child: ListView(
-                      children: [
-                        TaskCardWidget(
-                          title: "Get Started",
-                          description:
-                          "Hello User!! Welcome to our TO-DO application, which will track all your task.",
-                        ),
-                        TaskCardWidget(
-                          title: "Task 1",
-                          description: "Mark it as done!",
-                        ),
-                        TaskCardWidget(
-                          title: "Task 2",
-                          description: "Mark it as done!",
-                        ),
-                        TaskCardWidget(
-                          title: "Task 3",
-                          description: "Mark it as done!",
-                        ),
-                        TaskCardWidget(
-                          title: "Task 4",
-                          description: "Mark it as done!",
-                        ),
-                        TaskCardWidget(
-                          title: "Task 5",
-                          description: "Mark it as done!",
-                        ),
-                      ],
-                    ))
+                  children: [
+                    TaskCardWidget(
+                      title: "Cookies",
+                      description: "Expires in 2 days",
+                    ),
+                    TaskCardWidget(
+                      title: "Bread",
+                      description: "Expires in 3 days",
+                    ),
+                    TaskCardWidget(
+                      title: "Milk",
+                      description: "Expires in 5 days",
+                    ),
+                    TaskCardWidget(
+                      title: "Spinach",
+                      description: "Expires in 5 days",
+                    ),
+                  ],
+                ))
               ],
             ),
           ]),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        elevation: 5.0,
-        icon: const Icon(Icons.add),
-        label: const Text('Add'),
-        onPressed: () {},
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        // hasNotch: false,
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {},
-            ),
-            SizedBox(width: 20),
-            IconButton(
-              icon: Icon(Icons.card_giftcard_rounded),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => EditProfileScreen()));
-              },
-            )
-          ],
         ),
       ),
     );

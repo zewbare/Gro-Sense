@@ -11,6 +11,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/reset_password_screen.dart';
+
+import '../navigation.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -240,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var userEmail = googleUser.email;
           Fluttertoast.showToast(msg: "Login Successful");
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => DashBoardScreen()));
+              MaterialPageRoute(builder: (context) => MyBottomNavigation()));
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
 
@@ -253,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await storage.write(key: "uid", value: userCredential.user?.uid);
           Fluttertoast.showToast(msg: "Login Successful");
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => DashBoardScreen()));
+              MaterialPageRoute(builder: (context) => MyBottomNavigation()));
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":

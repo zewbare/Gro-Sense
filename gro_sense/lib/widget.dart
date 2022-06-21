@@ -13,7 +13,7 @@ class TaskCardWidget extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: 24.0,
-        vertical: 32.0,
+        vertical: 26.0,
       ),
       margin: EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(
@@ -27,8 +27,8 @@ class TaskCardWidget extends StatelessWidget {
             title,
             style: TextStyle(
               color: Color(0xFF000000),
-              fontSize: 22.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w400,
             ),
           ),
           Padding(
@@ -39,7 +39,7 @@ class TaskCardWidget extends StatelessWidget {
               description,
               style: TextStyle(
                 fontSize: 16.0,
-                height: 1.5,
+                height: 1.0,
                 color: Color(0xFFA8A8A8),
               ),
             ),
