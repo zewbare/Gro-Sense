@@ -1,11 +1,18 @@
+import 'dart:ffi';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gro_sense/Model/product_details.dart';
 import 'package:gro_sense/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:gro_sense/screens/screen_login.dart';
+import 'package:gro_sense/screens/home_screen.dart';
+import 'package:flutter/material.dart';
 import 'edit_profile_screen.dart';
 
 class AddaProductScreen extends StatefulWidget {
@@ -15,7 +22,7 @@ class AddaProductScreen extends StatefulWidget {
   _AddaProductScreenState createState() => _AddaProductScreenState();
 
 }
-//ghjk
+
 class _AddaProductScreenState extends State<AddaProductScreen>
 {
   final _formKey = GlobalKey<FormState>();
@@ -24,8 +31,8 @@ class _AddaProductScreenState extends State<AddaProductScreen>
   final expirydateEditingController = new TextEditingController();
   final numberofDaysReminderEditingController = new TextEditingController();
   bool onoroff = false;
-  var defaultoption = 'reminders off';
-
+  var defaultoption = 'Reminders Off';
+  late DateTime? pickedDate= DateTime.now();
   void toggleSwitch(bool value)
   {
 
@@ -113,7 +120,13 @@ class _AddaProductScreenState extends State<AddaProductScreen>
       (
       autofocus: false,
       controller: numberofDaysReminderEditingController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly
+        ],
+      textInputAction: TextInputAction.next,// Only numbers can be entered
+        onSaved: (value) {
+          numberofDaysReminderEditingController.text = value!;},
       validator: (value) {
         if(value!.isEmpty)
         {
@@ -121,41 +134,39 @@ class _AddaProductScreenState extends State<AddaProductScreen>
         }
         return null;
       },
-      onSaved: (value) {
-        productNameEditingController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.account_circle_sharp),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Get reminder - No of days before expiry",
+        contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+        hintText: "No of days for Reminder",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+
         ),
       ),
     );
 
+
     final submitButton = Material(
       elevation: 5,
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(500),
       color: Colors.green[400],
-     /* child: MaterialButton(
+      child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery
               .of(context)
               .size
               .width,
           onPressed: () {
-            submit(ProductNameEditingController.text, DateTime);
-          }, */
+              addDataUp();
+          },
           child: Text(
             "Submit",
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )
-    );
-   // );
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold, decorationThickness: 40),
+          ),
+    ),
+   );
 
     return Scaffold(
         appBar: AppBar(
@@ -191,7 +202,7 @@ class _AddaProductScreenState extends State<AddaProductScreen>
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
+                      children:<Widget>[
                         SizedBox(height: 20,),
                         productNameField,
                         SizedBox(height: 20),
@@ -203,19 +214,19 @@ class _AddaProductScreenState extends State<AddaProductScreen>
                           ),
                           readOnly: true,  //set it true, so that user will not able to edit text
                           onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
+                          DateTime? pickedDate = await showDatePicker(
                                 context: context,
                                 initialDate: DateTime.now(),
-                                firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2101)
+                                firstDate: DateTime.now(), //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2101),
                             );
-
                             if(pickedDate != null ){
                               print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
                               String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                            //  int numberofdaysreminder = int.parse(numberofDaysReminderEditingController.text);
                               print(formattedDate); //formatted date output using intl package =>  2021-03-16
                               //you can implement different kind of Date Format here according to your requirement
-
+                          //  var reminderdate = pickedDate.subtract(Duration(days:- numberofdaysreminder ));
                               setState(() {
                                 expirydateEditingController.text = formattedDate; //set output date to TextField value.
                               });
@@ -223,7 +234,7 @@ class _AddaProductScreenState extends State<AddaProductScreen>
                               print("Date is not selected");
                             }
                           },
-                        ),
+              ),
                         Transform.scale(scale: 2),
                         Switch
                           (
@@ -234,11 +245,16 @@ class _AddaProductScreenState extends State<AddaProductScreen>
                           inactiveThumbColor: Colors.grey[800],
                           inactiveTrackColor: Colors.grey[500],
                           ),
-                        SizedBox(height: 15),
-                        Text('$defaultoption', style: TextStyle(fontSize: 20),),
+                        SizedBox(height: 1),
+                        Text('$defaultoption',
+                          style: TextStyle(fontSize: 20),),
                         SizedBox(height: 20),
-                        numberofDaysReminder,
-                        SizedBox(height: 20),
+                        if (onoroff == true)...
+                          [
+                          SizedBox(height: 20),
+                            numberofDaysReminder,
+                        ],
+                        SizedBox(height: 30),
                         submitButton,
                       ]),
                 ),
@@ -248,76 +264,27 @@ class _AddaProductScreenState extends State<AddaProductScreen>
         ),
       );
     }//Widget Build
-/*
-  void submit(String productName, DateTime selectedDate) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        await auth
-            .createUserWithEmailAndPassword(email: email, password: password)
 
-            .then((uid) =>
-        {
-          Fluttertoast.showToast(msg: "signup Successful"),
+  void addDataUp() async {
+          Fluttertoast.showToast(msg: "Adding Products Successful");
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => DashBoardScreen()))
-        })
-            .then((value) => {postDetailsToFirestore()})
-            .catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
-        });
-      } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-          default:
-            errorMessage = "An undefined Error happened.";
-        }
-        Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
-      }
-    }
+         .then((value) => {saveResultToFirebase()});
   }
 
-  postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
+  saveResultToFirebase() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    addprod addPro;
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
-    UserModel userModel = UserModel();
-
-    // writing all the values
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-    userModel.firstName = firstNameEditingController.text;
-    userModel.secondName = secondNameEditingController.text;
-
-    await firebaseFirestore
+    addPro = addprod(productNameEditingController.text, pickedDate);
+   // print(pickedDate);
+    await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
+        .doc(currentUser!.uid)
+        .update({
+      "addprod": FieldValue.arrayUnion([addPro.toMap()])
 
-
+    });
   }
-*/
 
-} // Class _AddProductScreenState}
+} //MAIN CLASS END
