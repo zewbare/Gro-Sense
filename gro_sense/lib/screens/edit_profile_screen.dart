@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/screen_login.dart';
 
-class EditProfileScreen extends StatelessWidget{
-
+class EditProfileScreen extends StatelessWidget {
   @override
 Widget build(BuildContext context){
   return Scaffold(
