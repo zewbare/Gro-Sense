@@ -12,7 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/reset_password_screen.dart';
 
-import '../navigation.dart';
+import 'package:gro_sense/navigation.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
