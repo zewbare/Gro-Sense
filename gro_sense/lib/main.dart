@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/first_screen.dart';
 import 'package:gro_sense/screens/screen_login.dart';
@@ -11,6 +12,15 @@ Future<void> main() async  {
 
 class MyApp extends StatelessWidget {
 
+  final storage = new FlutterSecureStorage();
+
+  Future<bool> checkLoginStatus() async {
+    String? value = await storage.read(key: "uid");
+    if(value == null){
+      return false;
+    }
+    return true;
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -20,7 +30,16 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
         ),
         debugShowCheckedModeBanner: false,
-        home: FirstPage()
+        home: FutureBuilder(
+            future: checkLoginStatus(),
+            builder: (
+              BuildContext context, AsyncSnapshot<bool>
+                snapshot){
+                  if(snapshot.data == false){
+                    return FirstPage();
+        }
+                  return DashBoardScreen();
+        })
     );
   }
 }

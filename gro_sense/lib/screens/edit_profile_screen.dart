@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/screen_login.dart';
 
 class EditProfileScreen extends StatelessWidget{
@@ -17,7 +18,7 @@ Widget build(BuildContext context){
           Text('Edit my Profile'),
           onTap: (){
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+                MaterialPageRoute(builder: (context) => DashBoardScreen()));
           },),
         ListTile(title:
           Text('Notification'),

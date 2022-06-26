@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/first_screen.dart';
@@ -23,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // editing controller
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+  final storage = new FlutterSecureStorage();
 
   // firebase
   final _auth = FirebaseAuth.instance;
@@ -246,14 +248,12 @@ class _LoginScreenState extends State<LoginScreen> {
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) =>
-        {
-          Fluttertoast.showToast(msg: "Login Successful"),
+        UserCredential userCredential = await _auth
+            .signInWithEmailAndPassword(email: email, password: password);
+        await storage.write(key: "uid", value: userCredential.user?.uid);
+          Fluttertoast.showToast(msg: "Login Successful");
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => DashBoardScreen())),
-        });
+              MaterialPageRoute(builder: (context) => DashBoardScreen()));
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
