@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:gro_sense/model/user_model.dart';
+
 
 class TaskCardWidget extends StatelessWidget {
+  // final String priority;
   final String title;
   final String description;
+
   const TaskCardWidget(
-      {Key? key, required this.title, required this.description})
+      {Key? key,
+      // required this.priority,
+      required this.title,
+      required this.description})
       : super(key: key);
 
   @override
@@ -18,11 +27,19 @@ class TaskCardWidget extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Text(
+          //     priority,
+          //     style: TextStyle(
+          //       color: Color(0xFFFF0000),
+          //       fontSize: 14.0,
+          //       fontWeight: FontWeight.w600,
+          //     ),
+          //   ),
           Text(
             title,
             style: TextStyle(

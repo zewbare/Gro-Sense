@@ -11,6 +11,8 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
 
   List pages =[
     DashBoardScreen(),
+    // tabbarPage(),
+    // AddaProductScreen(),
     EditProfileScreen(),
   ];
   int currentIndex = 0;

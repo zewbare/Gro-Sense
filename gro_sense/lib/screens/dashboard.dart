@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widget.dart';
+
+class FetchData {}
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -11,19 +14,12 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //
-      //   title:
-      //       const Text("Dashboard", style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.w500)),
-      //   backgroundColor: Color(0xFFF6F6F6),
-      //
-      //   elevation: 0,
-      // ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -112,18 +108,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     child: ListView(
                   children: [
                     TaskCardWidget(
+                      // priority: "High",
                       title: "Cookies",
                       description: "Expires in 2 days",
                     ),
                     TaskCardWidget(
+                      // priority: "Low",
                       title: "Bread",
                       description: "Expires in 3 days",
                     ),
                     TaskCardWidget(
+                      // priority: "Low",
                       title: "Milk",
                       description: "Expires in 5 days",
                     ),
                     TaskCardWidget(
+                      // priority: "Medium",
                       title: "Spinach",
                       description: "Expires in 5 days",
                     ),
