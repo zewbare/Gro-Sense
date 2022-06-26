@@ -32,7 +32,10 @@ class _AddaProductScreenState extends State<AddaProductScreen>
   final numberofDaysReminderEditingController = new TextEditingController();
   bool onoroff = false;
   var defaultoption = 'Reminders Off';
-  late DateTime? pickedDate= DateTime.now();
+  DateTime? pickedDate;
+  int? numberofdaysreminder;
+  DateTime? reminderdate;
+
   void toggleSwitch(bool value)
   {
 
@@ -89,31 +92,7 @@ class _AddaProductScreenState extends State<AddaProductScreen>
           ),
         ),
       );
-/*
-    //Expiry Date Field
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(), // Required
-      lastDate: DateTime(2100),  // Required
-    );
 
-    DateTime selectedDate = new DateTime.now();
-    _selectDate(BuildContext context) async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2050),
-        cancelText: 'Cancel',
-        confirmText: 'Ok',
-      );
-      if (picked != null && picked != selectedDate)
-        setState(() {
-          selectedDate = picked;
-        }
-        );
-      } */
 
       //No of Days before Expiry - Reminder
     final numberofDaysReminder= TextFormField
@@ -214,7 +193,7 @@ class _AddaProductScreenState extends State<AddaProductScreen>
                           ),
                           readOnly: true,  //set it true, so that user will not able to edit text
                           onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
+                          pickedDate = await showDatePicker(
                                 context: context,
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime.now(), //DateTime.now() - not to allow to choose before today.
@@ -222,17 +201,19 @@ class _AddaProductScreenState extends State<AddaProductScreen>
                             );
                             if(pickedDate != null ){
                               print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                            //  int numberofdaysreminder = int.parse(numberofDaysReminderEditingController.text);
-                              print(formattedDate); //formatted date output using intl package =>  2021-03-16
+
+                         //    numberofdaysreminder = int.tryParse(numberofDaysReminderEditingController.text);
+
                               //you can implement different kind of Date Format here according to your requirement
-                          //  var reminderdate = pickedDate.subtract(Duration(days:- numberofdaysreminder ));
-                              setState(() {
-                                expirydateEditingController.text = formattedDate; //set output date to TextField value.
-                              });
+                        //    reminderdate = pickedDate?.subtract(Duration(days:- numberofdaysreminder!));
                             }else{
                               print("Date is not selected");
                             }
+                          setState(() {
+                          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate!);
+                          print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                            expirydateEditingController.text = formattedDate; //set output date to TextField value.
+                          });
                           },
               ),
                         Transform.scale(scale: 2),
@@ -282,7 +263,7 @@ class _AddaProductScreenState extends State<AddaProductScreen>
         .collection("users")
         .doc(currentUser!.uid)
         .update({
-      "addprod": FieldValue.arrayUnion([addPro.toMap()])
+      "Add Product": FieldValue.arrayUnion([addPro.toMap()])
 
     });
   }
