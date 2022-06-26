@@ -6,7 +6,6 @@ class tabbarPage extends StatefulWidget {
   tabbarPageState createState() => tabbarPageState();
 }
 
-
 class tabbarPageState extends State<tabbarPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
@@ -26,7 +25,7 @@ class tabbarPageState extends State<tabbarPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white10,
         /*appBar: AppBar(
           backgroundColor: Colors.green,
           title: Text('List Screen'),
@@ -37,7 +36,10 @@ class tabbarPageState extends State<tabbarPage>
               height: 50,
             ),
             Text("Gro-Sense",
-                style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold)),
             SizedBox(
               height: 10,
             ),
@@ -91,8 +93,14 @@ class tabbarPageState extends State<tabbarPage>
                             Icons.add,
                             color: Colors.red,
                           ),*/
-                          title: Text("List of Item: ${index+1}"),
-                          trailing: Icon(Icons.edit, color: Colors.red,),
+                          title: Text("List of Item: ${index + 1}"),
+                          /* onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => add_product));
+                          },*/
+                          trailing: Icon(
+                            Icons.edit,
+                            color: Colors.red,
+                          ),
                         ),
                       );
                     }),
@@ -102,18 +110,19 @@ class tabbarPageState extends State<tabbarPage>
                     itemCount: 10,
                     itemBuilder: (context, index) {
                       return Card(
-                        margin:
-                        EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                        child: ListTile(
-                          /*leading: Icon(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 10),
+                          child: ListTile(
+                            /*leading: Icon(
                             Icons.add,
                             color: Colors.red,
                           ),*/
-                          title: Text("Expired Item: ${index+1}"),
-                          trailing: Icon(Icons.delete, color: Colors.red,),
-                        )
-
-                      );
+                            title: Text("Expired Item: ${index + 1}"),
+                            trailing: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ));
                     })
               ],
             ))
