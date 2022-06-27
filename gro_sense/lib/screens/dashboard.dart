@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gro_sense/screens/location_screen.dart';
 
 import 'edit_profile_screen.dart';
 
@@ -47,7 +48,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             IconButton(
               icon: Icon(Icons.card_giftcard_rounded),
 
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LocationScreen()));
+              },
             ),
             IconButton(
               icon: Icon(Icons.settings),
