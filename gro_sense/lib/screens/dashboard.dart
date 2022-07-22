@@ -54,7 +54,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           top: 5.0,
                         ),
                         child: Text(
-                          "Nirali Amrutiya",
+                          "Nirali Amrutiya", // To check
                           style: TextStyle(
                             fontSize: 22.0,
                             height: 1.0,
