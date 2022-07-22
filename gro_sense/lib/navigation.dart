@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/dashboard.dart';
-import 'package:gro_sense/screens/edit_profile_screen.dart';
+import 'package:gro_sense/screens/settings.dart';
+
+import '../screens/addProduct.dart';
+import '../screens/charityDetails.dart';
+import '../screens/listOfProduct.dart';
 
 class MyBottomNavigation extends StatefulWidget {
   @override
@@ -11,9 +15,10 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
 
   List pages =[
     DashBoardScreen(),
-    // tabbarPage(),
-    // AddaProductScreen(),
-    EditProfileScreen(),
+    tabbarPage(),
+    AddaProductScreen(),
+    LocationScreen(),
+    SettingsScreen(),
   ];
   int currentIndex = 0;
   void onTap(int index){
