@@ -49,9 +49,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               //   title: "Edit Profile",
               //   onTap: () {},
               // ),
-              const SizedBox(
-                height: 40,
-              ),
+              // const SizedBox(
+              //   height: 40,
+              // ),
               SettingsTile(
                 color: Colors.green,
                 icon: Ionicons.moon_outline,
