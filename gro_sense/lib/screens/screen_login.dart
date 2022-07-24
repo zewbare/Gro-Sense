@@ -10,7 +10,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:gro_sense/screens/resetPassword.dart';
+=======
+import 'package:gro_sense/screens/reset_password_screen.dart';
+import 'package:gro_sense/screens/add_product.dart';
+
+>>>>>>> baad7414ef004840d472c06b028fac099135b420
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
