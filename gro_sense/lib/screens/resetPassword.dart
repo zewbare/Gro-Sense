@@ -41,6 +41,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         },
 
         onSaved: (value) {
+
           emailController.text = value!;
         },
         textInputAction: TextInputAction.next,
@@ -64,23 +65,26 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               .size
               .width,
           onPressed: () async {
-            try{
-              await  auth.sendPasswordResetEmail(email: emailController.text).then((uid) =>
-              {
-                Fluttertoast.showToast(
-                    msg: "Reset password has been sent to your email"),
-                Navigator.of(context).pop(),
-              });
-            } on FirebaseAuthException catch(error){
-              switch (error.code) {
-                case "user-not-found":
-                  errorMessage = "User with this email doesn't exist.";
-                  break;
-                default:
-                  errorMessage = "An undefined Error happened.";
+            if (_formKey.currentState!.validate()) {
+              try {
+                await auth.sendPasswordResetEmail(email: emailController.text)
+                    .then((uid) =>
+                {
+                  Fluttertoast.showToast(
+                      msg: "Reset password has been sent to your email"),
+                  Navigator.of(context).pop(),
+                });
+              } on FirebaseAuthException catch (error) {
+                switch (error.code) {
+                  case "user-not-found":
+                    errorMessage = "User with this email doesn't exist.";
+                    break;
+                  default:
+                    errorMessage = "An undefined Error happened.";
+                }
+                Fluttertoast.showToast(msg: errorMessage!);
+                print(error.code);
               }
-              Fluttertoast.showToast(msg: errorMessage!);
-              print(error.code);
             }
           },
           child: Text(
