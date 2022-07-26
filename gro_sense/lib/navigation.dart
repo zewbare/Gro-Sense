@@ -4,7 +4,7 @@ import 'package:gro_sense/screens/settings.dart';
 
 import '../screens/addProduct.dart';
 import '../screens/charityDetails.dart';
-import '../screens/listOfProduct.dart';
+import '../screens/tabbarPage.dart';
 
 class MyBottomNavigation extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
     DashBoardScreen(),
     tabbarPage(),
     AddaProductScreen(),
-    LocationScreen(),
+   LocationScreen(),
     SettingsScreen(),
   ];
   int currentIndex = 0;

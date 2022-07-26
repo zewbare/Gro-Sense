@@ -1,3 +1,4 @@
+import 'package:gro_sense/model/product_details.dart';
 class UserModel {
   String? uid;
   String? email;
@@ -13,10 +14,9 @@ class UserModel {
       email: map['email'],
       firstName: map['firstName'],
       secondName: map['secondName'],
-        emailVerified: map['emailVerified']
+        emailVerified: map['emailVerified'],
     );
   }
-
   // sending data to our server
   Map<String, dynamic> toMap() {
     return {
@@ -24,7 +24,19 @@ class UserModel {
       'email': email,
       'firstName': firstName,
       'secondName': secondName,
-      'emailVerified': emailVerified
+      'emailVerified': emailVerified,
+    };
+  }
+
+
+}
+mixin Userclass implements addprod {
+
+  List<dynamic>  addproduct = [];
+//send data to database
+  Map<String, dynamic> toMap() {
+    return {
+      'addprod': addprod,
     };
   }
 }

@@ -154,14 +154,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
                   userMap[0]['Add Product']!=null?
                   Container(
+
                     height: 600,
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: productData.length,
                       itemBuilder: (BuildContext context, int index) {
-
                         return buildItem(context,productData[index]);
                       },
-                      itemCount: productData.length,
+
                       // controller: listScrollController,
                     ),
                   ):Container(
@@ -175,55 +177,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ]),
         ),
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   elevation: 5.0,
-      //   icon: const Icon(Icons.add),
-      //   label: const Text('Add'),
-      //   onPressed: () {
-      //     Navigator.of(context).pushReplacement(
-      //         MaterialPageRoute(builder: (context) => AddaProductScreen()));
-      //   },
-      // ),
-      // floatingActionButtonLocation:
-      // FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: BottomAppBar(
-      //
-      //   // hasNotch: false,
-      //   child: new Row(
-      //     mainAxisSize: MainAxisSize.max,
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: <Widget>[
-      //       // IconButton(
-      //       //   icon: Icon(Icons.home),
-      //       //   onPressed: () {},
-      //       // ),
-      //       // IconButton(
-      //       //   icon: Icon(Icons.menu),
-      //       //   onPressed: () {
-      //       //     Navigator.of(context).pushReplacement(
-      //       //     MaterialPageRoute(builder: (context) => tabbarPage()));
-      //       //
-      //       //   },
-      //       // ),
-      //       // SizedBox(width:20),
-      //       // IconButton(
-      //       //   icon: Icon(Icons.card_giftcard_rounded),
-      //       //
-      //       //   onPressed: () {
-      //       //     Navigator.of(context).pushReplacement(
-      //       //         MaterialPageRoute(builder: (context) => LocationScreen()));
-      //       //   },
-      //       // ),
-      //       // IconButton(
-      //       //   icon: Icon(Icons.settings),
-      //       //   onPressed: () {
-      //       //     Navigator.of(context).pushReplacement(
-      //       //         MaterialPageRoute(builder: (context) => SettingsScreen()));
-      //       //   },
-      //       // )
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
@@ -240,10 +193,7 @@ Widget buildItem(BuildContext context,map) {
     var date = new DateTime.now();
 
     final difference =formatTimestamp(map['expiryDate']).difference(date).inDays;
-    return difference <0?Container(
-      height: MediaQuery.of(context).size.height,
-      width:MediaQuery.of(context).size.width,
-      child: Text("No expired products"),
+    return difference < -1 ?Container(
     ) :Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(

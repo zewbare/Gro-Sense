@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/screen_login.dart';
+import 'package:gro_sense/screens/dashboard.dart';
 
 class EditProfileScreen extends StatelessWidget {
   @override
@@ -8,6 +9,14 @@ Widget build(BuildContext context){
   return Scaffold(
     appBar: AppBar(
       title: Text('Settings'),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.white),
+        onPressed: () {
+          // passing this to our root
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => DashBoardScreen()));
+        },
+      ),
     ),
     body: Container(
     child: Drawer(
@@ -34,6 +43,7 @@ Widget build(BuildContext context){
          onTap: (){
                Navigator.of(context).pushReplacement(
                    MaterialPageRoute(builder: (context) => LoginScreen()));
+
          },),
         ],
       )

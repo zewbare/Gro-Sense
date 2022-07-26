@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/developerList.dart';
 import 'package:gro_sense/screens/dashboard.dart';
-import 'package:gro_sense/screens/landingScreen.dart';
-import 'package:gro_sense/utils/navigation.dart';
+import 'package:gro_sense/screens/first_screen.dart';
+import 'package:gro_sense/navigation.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:gro_sense/Widgets/settings_tile.dart';
+import 'package:gro_sense/Widget/settings_tile.dart';
 
 import '../Widget/settings_tile.dart';
-import 'notification.dart';
+import '../navigation.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gro_sense/screens/dashboard.dart';
-import 'package:gro_sense/screens/landingScreen.dart';
-import 'package:gro_sense/screens/login.dart';
+import 'package:gro_sense/screens/first_screen.dart';
+import 'package:gro_sense/screens/screen_login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gro_sense/utils/navigation.dart';
+import 'package:gro_sense/navigation.dart';
 Future<void> main() async  {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
