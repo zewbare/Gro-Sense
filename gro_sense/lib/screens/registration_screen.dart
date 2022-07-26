@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gro_sense/screens/screen_login.dart';
 import 'package:gro_sense/screens/screen_login.dart';
-import 'package:gro_sense/screens/add_product.dart';
+import 'package:gro_sense/screens/addProduct.dart';
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 

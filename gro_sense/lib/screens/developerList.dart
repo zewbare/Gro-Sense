@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gro_sense/utils/navigation.dart';
+import 'package:gro_sense/navigation.dart';
 
 class User1 {
   final String name;
