@@ -3,8 +3,7 @@ import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/screen_login.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 
-class EditProfileScreen extends StatelessWidget{
-
+class EditProfileScreen extends StatelessWidget {
   @override
 Widget build(BuildContext context){
   return Scaffold(
