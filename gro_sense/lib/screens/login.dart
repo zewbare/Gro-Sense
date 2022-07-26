@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gro_sense/screens/dashboard.dart';
-import 'package:gro_sense/screens/landingScreen.dart';
+import 'package:gro_sense/screens/first_screen.dart';
 import 'package:gro_sense/screens/home_screen.dart';
-import 'package:gro_sense/screens/signUp.dart';
+import 'package:gro_sense/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +11,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:gro_sense/screens/resetPassword.dart';
 import 'package:gro_sense/screens/addProduct.dart';
-import 'package:gro_sense/utils/navigation.dart';
+
+import 'package:gro_sense/navigation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
   // form key
   final _formKey = GlobalKey<FormState>();
@@ -38,8 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     //email field
     final emailField = TextFormField(
         autofocus: false,
@@ -101,10 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
       color: Colors.green[400],
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery
-              .of(context)
-              .size
-              .width,
+          minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
           },
@@ -138,8 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
     // );
 
     return Scaffold(
-
-
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -163,28 +159,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: 50),
-                    Text("GroSense",style: TextStyle(
-                        color: Colors.green[400],
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 50),),
+                    Text(
+                      "GroSense",
+                      style: TextStyle(
+                          color: Colors.green[400],
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 50),
+                    ),
                     SizedBox(height: 70),
                     SizedBox(height: 45),
                     emailField,
                     SizedBox(height: 25),
                     passwordField,
                     GestureDetector(
-                      child: Text(
-                          "Forgot Password?",
+                      child: Text("Forgot Password?",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green[400],
-                            fontSize:15,
-                          )
-                      ),
-                      onTap: (){
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
+                            fontSize: 15,
+                          )),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ResetPasswordScreen()));
                       },
                     ),
                     SizedBox(height: 35),
@@ -229,12 +226,14 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -243,18 +242,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     var userEmail = googleUser.email;
-    Fluttertoast.showToast(msg: "Login Successfully !");
+    Fluttertoast.showToast(msg: "Login Successful");
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MyBottomNavigation()));
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
-
   }
+
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential userCredential = await _auth
-            .signInWithEmailAndPassword(email: email, password: password);
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
         await storage.write(key: "uid", value: userCredential.user?.uid);
         Fluttertoast.showToast(msg: "Login Successful");
         Navigator.of(context).pushReplacement(
