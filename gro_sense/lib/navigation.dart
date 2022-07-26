@@ -17,7 +17,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
     DashBoardScreen(),
     tabbarPage(),
     AddaProductScreen(),
-   LocationScreen(),
+    LocationScreen(),
     SettingsScreen(),
   ];
   int currentIndex = 0;

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gro_sense/model/user_model.dart';
+import 'package:gro_sense/navigation.dart';
 import 'package:gro_sense/screens/dashboard.dart';
 import 'package:gro_sense/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -200,14 +201,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/logo.png"),
-            colorFilter: new ColorFilter.mode(
-                Colors.black.withOpacity(0.3), BlendMode.dstATop),
-            fit: BoxFit.cover,
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage("assets/logo.png"),
+        //     colorFilter: new ColorFilter.mode(
+        //         Colors.black.withOpacity(0.3), BlendMode.dstATop),
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         child: SingleChildScrollView(
           child: Container(
             color: Colors.transparent,
@@ -221,7 +222,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   children: <Widget>[
                     SizedBox(height: 50),
                     Text(
-                      "GRO-SENSE",
+                      "GroSense",
                       style: TextStyle(
                           color: Colors.green[400],
                           fontWeight: FontWeight.bold,
@@ -278,7 +279,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "signup Successful"),
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => DashBoardScreen()))
+                      builder: (context) => MyBottomNavigation()))
                 })
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {

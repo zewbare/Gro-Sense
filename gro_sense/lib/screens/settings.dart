@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gro_sense/screens/developerList.dart';
-import 'package:gro_sense/screens/dashboard.dart';
+
 import 'package:gro_sense/screens/first_screen.dart';
 import 'package:gro_sense/navigation.dart';
 import 'package:ionicons/ionicons.dart';
@@ -40,18 +40,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 0),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // SettingsTile(
-              //   color: Colors.green,
-              //   icon: Ionicons.pencil_outline,
-              //   title: "Edit Profile",
-              //   onTap: () {},
-              // ),
-              // const SizedBox(
-              //   height: 40,
-              // ),
               SettingsTile(
                 color: Colors.green,
                 icon: Ionicons.moon_outline,
@@ -62,19 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(
-                height: 40,
-              ),
-              // SettingsTile(
-              //   color: Colors.green,
-              //   icon: Ionicons.pencil_outline,
-              //   title: "Notification",
-              //   onTap: () {
-              //     Navigator.of(context).pushReplacement(
-              //         MaterialPageRoute(builder: (context) => NotificationScreen()));
-              //   },
-              // ),
-              const SizedBox(
-                height: 40,
+                height: 20,
               ),
               SettingsTile(
                 color: Colors.green,
