@@ -43,16 +43,15 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
   late int numberofdaysreminder;
   bool isLoading = false;
 
-  int getDate(String s)
-  {
+  int getDate(String s) {
     int num = 0;
     int n = s.length;
-    for(int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
       num = num * 10 + (int.parse(s[i]) - 48);
     }
     return num;
   }
+
   void toggleSwitch(bool value) {
     if (onoroff == false) {
       setState(() {
@@ -114,9 +113,10 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
 
       // Only numbers can be entered
       onChanged: (value) async {
-        numberofdaysreminder =  int.parse(numberofDaysReminderEditingController.text);
+        numberofdaysreminder =
+            int.parse(numberofDaysReminderEditingController.text);
         print(pickedDate);
-        reminderdate = pickedDate.add(Duration(days:- numberofdaysreminder));
+        reminderdate = pickedDate.add(Duration(days: -numberofdaysreminder));
       },
       onSaved: (value) {
         numberofDaysReminderEditingController.text = value!;
@@ -137,27 +137,31 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
       ),
     );
 
-    final ExpiryFormField = TextFormField
-      (
-      controller: expirydateEditingController, //editing controller of this TextField
+    final ExpiryFormField = TextFormField(
+      controller:
+          expirydateEditingController, //editing controller of this TextField
       validator: (value) {
-
-        if(value!.isEmpty)
-        {
+        if (value!.isEmpty) {
           return ("Please enter the date");
         }
 
         return null;
       },
       decoration: InputDecoration(
-          icon: Icon(Icons.calendar_today), //icon of text field
-          labelText: "Enter Date"),
-      readOnly: true,  //set it true, so that user will not able to edit text
+        prefixIcon: Icon(Icons.calendar_today), //icon of text field
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Enter Date",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      readOnly: true, //set it true, so that user will not able to edit text
       onTap: () async {
         pickedDate = (await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime.now(), //DateTime.now() - not to allow to choose before today.
+          firstDate: DateTime
+              .now(), //DateTime.now() - not to allow to choose before today.
           lastDate: DateTime(2101),
         ))!;
         //pickedDate output format => 2021-03-10 00:00:00.000
@@ -165,14 +169,13 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
         //formatted date output using intl package =>  2021-03-16
         //you can implement different kind of Date Format here according to your requiremen
         setState(() {
-          expirydateEditingController.text = formattedDate;//set output date to TextField value.
-          pickedDate=this.pickedDate;
+          expirydateEditingController.text =
+              formattedDate; //set output date to TextField value.
+          pickedDate = this.pickedDate;
         });
         /*print(pickedDate);*/
       },
     );
-
-
 
     final submitButton = Material(
       elevation: 5,
@@ -182,8 +185,7 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          if (_formKey.currentState!.validate())
-          {
+          if (_formKey.currentState!.validate()) {
             addDataUp();
           }
 
@@ -220,65 +222,64 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          // image: DecorationImage(
-          //  image: AssetImage("assets/logo.png"),
-          //  colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-          //fit: BoxFit.cover,
-          // ),
-        ),
+            // image: DecorationImage(
+            //  image: AssetImage("assets/logo.png"),
+            //  colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+            //fit: BoxFit.cover,
+            // ),
+            ),
         child: SingleChildScrollView(
-          child:
-          isLoading
+          child: isLoading
               ? Container(
-            height: 300,
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor:
-                AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-              ),
-            ),
-          )
+                  height: 300,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                    ),
+                  ),
+                )
               : Container(
-            color: Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      productNameField,
-                      SizedBox(height: 20),
-                      ExpiryFormField,
-                      Transform.scale(scale: 2),
-                      Switch(
-                        value: onoroff,
-                        onChanged: toggleSwitch,
-                        activeColor: Colors.green,
-                        activeTrackColor: Colors.lightGreenAccent[100],
-                        inactiveThumbColor: Colors.grey[800],
-                        inactiveTrackColor: Colors.grey[500],
-                      ),
-                      SizedBox(height: 1),
-                      Text(
-                        '$defaultoption',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(height: 20),
-                      if (onoroff == true) ...[
-                        SizedBox(height: 20),
-                        numberofDaysReminder,
-                      ],
-                      SizedBox(height: 30),
-                      submitButton,
-                    ]),
-              ),
-            ),
-          ),
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 20,
+                            ),
+                            productNameField,
+                            SizedBox(height: 20),
+                            ExpiryFormField,
+                            Transform.scale(scale: 2),
+                            Switch(
+                              value: onoroff,
+                              onChanged: toggleSwitch,
+                              activeColor: Colors.green,
+                              activeTrackColor: Colors.lightGreenAccent[100],
+                              inactiveThumbColor: Colors.grey[800],
+                              inactiveTrackColor: Colors.grey[500],
+                            ),
+                            SizedBox(height: 1),
+                            Text(
+                              '$defaultoption',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(height: 20),
+                            if (onoroff == true) ...[
+                              SizedBox(height: 20),
+                              numberofDaysReminder,
+                            ],
+                            SizedBox(height: 30),
+                            submitButton,
+                          ]),
+                    ),
+                  ),
+                ),
         ),
       ),
     );
@@ -314,7 +315,7 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
 
   //notification
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   Future notificationSelected(String? payload) async {
     Navigator.of(context).pushReplacement(
@@ -324,10 +325,10 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
   Future<void> initNotification() async {
     //Android initialization
     final AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     final InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(android: initializationSettingsAndroid);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: notificationSelected);
@@ -341,12 +342,12 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
         icon: "@mipmap/ic_launcher");
 
     var generalNotificationDetails =
-    new NotificationDetails(android: androidDetails);
+        new NotificationDetails(android: androidDetails);
 
     tz.initializeTimeZones();
 
     var scheduledTime =
-    DateTime.now().add(Duration(seconds: 15)); //reminder date variable here
+        DateTime.now().add(Duration(seconds: 15)); //reminder date variable here
 
     var time = tz.TZDateTime.from(scheduledTime, tz.local);
 
@@ -357,7 +358,7 @@ class _AddaProductScreenState extends State<AddaProductScreen> {
         time,
         generalNotificationDetails,
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.wallClockTime,
+            UILocalNotificationDateInterpretation.wallClockTime,
         androidAllowWhileIdle: true);
   }
 } //MAIN CLASS END
