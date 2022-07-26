@@ -5,9 +5,9 @@ import 'package:gro_sense/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gro_sense/screens/screen_login.dart';
-import 'package:gro_sense/screens/screen_login.dart';
+import 'package:gro_sense/screens/login.dart';
 import 'package:gro_sense/screens/addProduct.dart';
+
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
@@ -20,7 +20,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
-
 
   // our form key
   final _formKey = GlobalKey<FormState>();
@@ -174,10 +173,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       color: Colors.green[400],
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery
-              .of(context)
-              .size
-              .width,
+          minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signUp(emailEditingController.text, passwordEditingController.text);
           },
@@ -204,11 +200,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/logo.png"),
-            colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+            colorFilter: new ColorFilter.mode(
+                Colors.black.withOpacity(0.3), BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),
@@ -224,10 +220,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: 50),
-                    Text("GRO-SENSE",style:TextStyle(
-                        color: Colors.green[400],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50),) ,
+                    Text(
+                      "GRO-SENSE",
+                      style: TextStyle(
+                          color: Colors.green[400],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50),
+                    ),
                     SizedBox(height: 45),
                     firstNameField,
                     SizedBox(height: 20),
@@ -250,8 +249,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoginScreen()));
+                                      builder: (context) => LoginScreen()));
                             },
                             child: Text(
                               "Login",
@@ -277,13 +275,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       try {
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
-
-            .then((uid) =>
-        {
-          Fluttertoast.showToast(msg: "signup Successful"),
-          Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => DashBoardScreen()))
-        })
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "signup Successful"),
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => DashBoardScreen()))
+                })
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e!.message);
@@ -338,7 +334,5 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
-
-
   }
 }

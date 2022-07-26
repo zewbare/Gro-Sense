@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gro_sense/screens/screen_login.dart';
+import 'package:gro_sense/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ResetPasswordScreen extends StatefulWidget{
+class ResetPasswordScreen extends StatefulWidget {
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
@@ -16,7 +16,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController emailController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-
     final emailField = TextFormField(
         autofocus: false,
         controller: emailController,
@@ -31,17 +30,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             return ("Please Enter a valid email");
           }
           // final list = FirebaseAuth.instance.fetchSignInMethodsForEmail(value);
-          if( !FirebaseAuth.instance.fetchSignInMethodsForEmail(value).toString().isEmpty)
-          {
+          if (!FirebaseAuth.instance
+              .fetchSignInMethodsForEmail(value)
+              .toString()
+              .isEmpty) {
             print("error");
             Fluttertoast.showToast(msg: "User don't exist");
             return ("User don't exist");
           }
           return null;
         },
-
         onSaved: (value) {
-
           emailController.text = value!;
         },
         textInputAction: TextInputAction.next,
@@ -60,20 +59,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       color: Colors.green[400],
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery
-              .of(context)
-              .size
-              .width,
+          minWidth: MediaQuery.of(context).size.width,
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
               try {
-                await auth.sendPasswordResetEmail(email: emailController.text)
-                    .then((uid) =>
-                {
-                  Fluttertoast.showToast(
-                      msg: "Reset password has been sent to your email"),
-                  Navigator.of(context).pop(),
-                });
+                await auth
+                    .sendPasswordResetEmail(email: emailController.text)
+                    .then((uid) => {
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Reset password has been sent to your email"),
+                          Navigator.of(context).pop(),
+                        });
               } on FirebaseAuthException catch (error) {
                 switch (error.code) {
                   case "user-not-found":
@@ -95,7 +92,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           )),
     );
 
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Reset Password'),
@@ -106,7 +102,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/logo.png"),
-            colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+            colorFilter: new ColorFilter.mode(
+                Colors.black.withOpacity(0.3), BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),
@@ -122,29 +119,34 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(height: 50),
-                      Text('Enter your email Address below to reset password',
-                        textAlign : TextAlign.center,
+                      Text(
+                        'Enter your email Address below to reset password',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.green[400],
                             fontWeight: FontWeight.bold,
-                            fontSize: 20),),
+                            fontSize: 20),
+                      ),
                       SizedBox(height: 70),
                       emailField,
-                      SizedBox(height: 15,),
+                      SizedBox(
+                        height: 15,
+                      ),
                       submitButton,
-                      SizedBox(height: 15,),
+                      SizedBox(
+                        height: 15,
+                      ),
                       GestureDetector(
-                        child: Text(
-                            "need to login?",
+                        child: Text("need to login?",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.green[400],
-                              fontSize:15,
-                            )
-                        ),
-                        onTap: (){
+                              fontSize: 15,
+                            )),
+                        onTap: () {
                           Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => LoginScreen()));
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
                         },
                       ),
                     ]),

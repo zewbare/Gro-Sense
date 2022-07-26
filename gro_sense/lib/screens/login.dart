@@ -5,6 +5,7 @@ import 'package:gro_sense/screens/first_screen.dart';
 import 'package:gro_sense/screens/home_screen.dart';
 import 'package:gro_sense/screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,12 +16,14 @@ import 'package:gro_sense/screens/resetPassword.dart';
 import 'package:gro_sense/screens/addProduct.dart';
 
 import 'package:gro_sense/navigation.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
   // form key
   final _formKey = GlobalKey<FormState>();
@@ -38,8 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     //email field
     final emailField = TextFormField(
         autofocus: false,
@@ -101,10 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
       color: Colors.green[400],
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery
-              .of(context)
-              .size
-              .width,
+          minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
           },
@@ -138,19 +136,17 @@ class _LoginScreenState extends State<LoginScreen> {
     // );
 
     return Scaffold(
-
-
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
 
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/logo.png"),
-            colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-            fit: BoxFit.cover,
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage("assets/logo.png"),
+        //     colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         child: SingleChildScrollView(
           child: Container(
             color: Colors.transparent,
@@ -162,28 +158,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: 70),
-                    Text("GRO-SENSE",style: TextStyle(
-                        color: Colors.green[400],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50),),
                     SizedBox(height: 50),
+                    Text(
+                      "GroSense",
+                      style: TextStyle(
+                          color: Colors.green[400],
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 50),
+                    ),
+                    SizedBox(height: 70),
                     SizedBox(height: 45),
                     emailField,
                     SizedBox(height: 25),
                     passwordField,
                     GestureDetector(
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[400],
-                          fontSize:15,
-                        )
-                      ),
-                      onTap: (){
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
+                      child: Text("Forgot Password?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green[400],
+                            fontSize: 15,
+                          )),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => ResetPasswordScreen()));
                       },
                     ),
                     SizedBox(height: 35),
@@ -210,15 +208,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           )
                         ]),
-                    SizedBox(height: 15,),
-                    Text("OR"),
-                    SizedBox(height: 15,),
+                    // SizedBox(height: 15,),
+                    // Text("OR"),
+                    // SizedBox(height: 15,),
                     //googleButton,
-                    ElevatedButton(onPressed: () async {
-                      await signInWithGoogle();
-
-                      setState(() {});
-                    }, child: Text("Login with google")),
+                    // ElevatedButton(onPressed: () async {
+                    //   await signInWithGoogle();
+                    //
+                    //   setState(() {});
+                    // }, child: Text("Login with google")),
                   ],
                 ),
               ),
@@ -228,12 +226,14 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -242,22 +242,22 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     var userEmail = googleUser.email;
-          Fluttertoast.showToast(msg: "Login Successful");
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MyBottomNavigation()));
+    Fluttertoast.showToast(msg: "Login Successful");
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => MyBottomNavigation()));
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
-
   }
+
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential userCredential = await _auth
-            .signInWithEmailAndPassword(email: email, password: password);
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
         await storage.write(key: "uid", value: userCredential.user?.uid);
-          Fluttertoast.showToast(msg: "Login Successful");
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MyBottomNavigation()));
+        Fluttertoast.showToast(msg: "Login Successful");
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => MyBottomNavigation()));
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
